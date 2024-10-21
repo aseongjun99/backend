@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/todos")
 @RestController
@@ -42,4 +43,10 @@ public class TodolistController {
     public void updateTodo(@PathVariable("todoId") int todoId) {
         todoService.updateTodo(todoId);
     }
+
+    @PostMapping("/email")
+    public Boolean sendCertificationNumber(@RequestBody Map<String, String> email) {
+        todoService.sendCertificationNumber(email);
+    }
+
 }
