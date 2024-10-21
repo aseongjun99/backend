@@ -10,5 +10,5 @@ public class EmailResponse {
     public boolean getIsOk() {
         return this.isOk;
     }
-    
+
 }

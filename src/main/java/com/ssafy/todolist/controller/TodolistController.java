@@ -1,6 +1,5 @@
 package com.ssafy.todolist.controller;
 
-import com.ssafy.todolist.domain.EmailResponse;
 import com.ssafy.todolist.domain.FindTodosResponse;
 import com.ssafy.todolist.domain.Todo;
 import com.ssafy.todolist.domain.TodoDTO;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/todos")
 @RestController
@@ -43,11 +41,6 @@ public class TodolistController {
     @PatchMapping("/{todoId}")
     public void updateTodo(@PathVariable("todoId") int todoId) {
         todoService.updateTodo(todoId);
-    }
-
-    @PostMapping("/email")
-    public EmailResponse sendCertificationNumber(@RequestBody Map<String, String> email) {
-        return todoService.sendCertificationNumber(email.get("email"));
     }
 
 }
