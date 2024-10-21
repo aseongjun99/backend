@@ -1,5 +1,6 @@
 package com.ssafy.todolist.service;
 
+import com.ssafy.todolist.domain.AuthenticationResponse;
 import com.ssafy.todolist.domain.EmailResponse;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -44,6 +45,10 @@ public class EmailService {
         } catch (Exception e) {
             return new EmailResponse(false);
         }
+    }
+
+    public AuthenticationResponse authenticateCertificationNumber(int certificationNumber) {
+        return new AuthenticationResponse(number == certificationNumber);
     }
 
 }
