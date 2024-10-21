@@ -1,5 +1,6 @@
 package com.ssafy.todolist.service;
 
+import com.ssafy.todolist.domain.EmailResponse;
 import com.ssafy.todolist.domain.Todo;
 import com.ssafy.todolist.domain.TodoDTO;
 import com.ssafy.todolist.repository.TodoRepository;
@@ -65,9 +66,13 @@ public class TodoService {
         return message;
     }
 
-    public int sendCertificationNumber(String email) {
-        javaMailSender.send(createMail(email));
-        return number;
+    public EmailResponse sendCertificationNumber(String email) {
+        try {
+            javaMailSender.send(createMail(email));
+            return new EmailResponse(true);
+        } catch (Exception e) {
+            return new EmailResponse(false);
+        }
     }
 
 }
