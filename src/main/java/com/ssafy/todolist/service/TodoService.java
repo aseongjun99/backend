@@ -44,7 +44,7 @@ public class TodoService {
     }
 
     public MimeMessage createMail(String email) {
-        int number = (int) (Math.random() * (90000)) + 100000;
+        number = (int) (Math.random() * (90000)) + 100000;
         MimeMessage message = javaMailSender.createMimeMessage();
 
         try {
@@ -65,5 +65,9 @@ public class TodoService {
         return message;
     }
 
+    public int sendCertificationNumber(String email) {
+        javaMailSender.send(createMail(email));
+        return number;
+    }
 
 }
