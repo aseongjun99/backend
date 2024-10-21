@@ -1,5 +1,6 @@
 package com.ssafy.todolist.controller;
 
+import com.ssafy.todolist.domain.EmailResponse;
 import com.ssafy.todolist.domain.FindTodosResponse;
 import com.ssafy.todolist.domain.Todo;
 import com.ssafy.todolist.domain.TodoDTO;
@@ -45,8 +46,8 @@ public class TodolistController {
     }
 
     @PostMapping("/email")
-    public Boolean sendCertificationNumber(@RequestBody Map<String, String> email) {
-        return todoService.sendCertificationNumber(email);
+    public EmailResponse sendCertificationNumber(@RequestBody Map<String, String> email) {
+        return todoService.sendCertificationNumber(email.get("email"));
     }
 
 }
