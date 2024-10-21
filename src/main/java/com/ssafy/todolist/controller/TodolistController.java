@@ -46,7 +46,7 @@ public class TodolistController {
 
     @PostMapping("/email")
     public Boolean sendCertificationNumber(@RequestBody Map<String, String> email) {
-        todoService.sendCertificationNumber(email);
+        return todoService.sendCertificationNumber(email);
     }
 
 }
