@@ -1,6 +1,7 @@
 package com.ssafy.todolist.controller;
 
 import com.ssafy.todolist.domain.AuthenticationResponse;
+import com.ssafy.todolist.domain.EmailDTO;
 import com.ssafy.todolist.domain.EmailResponse;
 import com.ssafy.todolist.service.EmailService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +20,8 @@ public class EmailController {
     }
 
     @PostMapping("/email")
-    public EmailResponse sendCertificationNumber(@RequestBody Map<String, String> email) {
-        return emailService.sendCertificationNumber(email.get("email"));
+    public EmailResponse sendCertificationNumber(@RequestBody EmailDTO emailDto) {
+        return emailService.sendCertificationNumber("test");
     }
 
     @PostMapping("/authentication")
