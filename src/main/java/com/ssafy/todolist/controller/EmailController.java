@@ -22,7 +22,7 @@ public class EmailController {
 
     @PostMapping("/email")
     public EmailResponse sendCertificationNumber(@RequestBody EmailDTO emailDto) {
-        return emailService.sendCertificationNumber("test");
+        return emailService.sendCertificationNumber(emailDto.getEmail());
     }
 
     @PostMapping("/authentication")
