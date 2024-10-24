@@ -1,7 +1,9 @@
 package com.ssafy.todolist.service;
 
 import com.ssafy.todolist.domain.email.AuthenticationResponse;
+import com.ssafy.todolist.domain.email.Email;
 import com.ssafy.todolist.domain.email.EmailResponse;
+import com.ssafy.todolist.repository.EmailRepository;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -9,15 +11,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
+    private final EmailRepository emailRepository;
     private final JavaMailSender javaMailSender;
-    private static int number;
 
-    public EmailService(JavaMailSender javaMailSender) {
+    public EmailService(JavaMailSender javaMailSender, EmailRepository emailRepository) {
         this.javaMailSender = javaMailSender;
+        this.emailRepository = emailRepository;
     }
 
-    public MimeMessage createMail(String email) {
-        number = (int) (Math.random() * (90000)) + 100000;
+    public String createCertificationNumber() {
+        return Integer.toString((int) (Math.random() * 90000 + 100000));
+    }
+
+    public MimeMessage createMail(String email, String certificationNumber) {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         try {
@@ -27,7 +33,7 @@ public class EmailService {
             StringBuilder body = new StringBuilder();
             body.append("<h3>요청하신 인증 번호 입니다.</h3>")
                     .append("<h1>")
-                    .append(number)
+                    .append(certificationNumber)
                     .append("</h1>")
                     .append("<h3>감사합니다.</h3>");
             message.setText(body.toString(), "UTF-8", "html");
@@ -40,7 +46,9 @@ public class EmailService {
 
     public EmailResponse sendCertificationNumber(String email) {
         try {
-            javaMailSender.send(createMail(email));
+            String certificationNumber = createCertificationNumber();
+            javaMailSender.send(createMail(email, certificationNumber));
+            emailRepository.save(new Email(email, certificationNumber));
             return new EmailResponse(true);
         } catch (Exception e) {
             return new EmailResponse(false);
