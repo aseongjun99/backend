@@ -1,7 +1,7 @@
 package com.ssafy.todolist.service;
 
-import com.ssafy.todolist.domain.AuthenticationResponse;
-import com.ssafy.todolist.domain.EmailResponse;
+import com.ssafy.todolist.domain.email.AuthenticationResponse;
+import com.ssafy.todolist.domain.email.EmailResponse;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
