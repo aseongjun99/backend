@@ -1,7 +1,7 @@
-package com.ssafy.todolist.domain.paging;
+package com.ssafy.todolist.paging.dto;
 
-import com.ssafy.todolist.domain.todo.Todo;
-import com.ssafy.todolist.domain.todo.TodoDTO;
+import com.ssafy.todolist.todo.domain.Todo;
+import com.ssafy.todolist.todo.dto.TodoDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

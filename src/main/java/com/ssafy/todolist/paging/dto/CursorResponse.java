@@ -1,6 +1,6 @@
-package com.ssafy.todolist.domain.paging;
+package com.ssafy.todolist.paging.dto;
 
-import com.ssafy.todolist.domain.todo.TodoDTO;
+import com.ssafy.todolist.todo.dto.TodoDTO;
 
 import java.util.List;
 
