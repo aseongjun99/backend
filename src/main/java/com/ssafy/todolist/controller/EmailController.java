@@ -21,12 +21,12 @@ public class EmailController {
     }
 
     @PostMapping("/email")
-    public EmailResponse sendCertificationNumber(@RequestBody EmailDTO emailDto) {
-        return emailService.sendCertificationNumber(emailDto.getEmail());
+    public EmailResponse sendAuthentication(@RequestBody EmailDTO emailDto) {
+        return emailService.sendAuthentication(emailDto.getEmail());
     }
 
     @PostMapping("/authentication")
-    public AuthenticationResponse authenticateCertificationNumber(@RequestBody AuthenticationDTO authenticationDTO) {
+    public AuthenticationResponse authenticate(@RequestBody AuthenticationDTO authenticationDTO) {
         return emailService.authenticate(authenticationDTO);
     }
 
