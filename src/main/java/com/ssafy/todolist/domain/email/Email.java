@@ -15,11 +15,15 @@ public class Email {
     @Column(nullable = false)
     private String authenticationString;
 
+    @Column(nullable = false)
+    private String expirationTime;
+
     public Email() {}
 
-    public Email(String email, String authenticationString) {
+    public Email(String email, String authenticationString, String expirationTime) {
         this.email = email;
         this.authenticationString = authenticationString;
+        this.expirationTime = expirationTime;
     }
 
     public String getAuthenticationString() {
@@ -28,5 +32,9 @@ public class Email {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getExpirationTime() {
+        return expirationTime;
     }
 }
