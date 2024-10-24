@@ -1,8 +1,9 @@
 package com.ssafy.todolist.controller;
 
-import com.ssafy.todolist.domain.AuthenticationResponse;
-import com.ssafy.todolist.domain.EmailDTO;
-import com.ssafy.todolist.domain.EmailResponse;
+import com.ssafy.todolist.domain.email.AuthenticationDTO;
+import com.ssafy.todolist.domain.email.AuthenticationResponse;
+import com.ssafy.todolist.domain.email.EmailDTO;
+import com.ssafy.todolist.domain.email.EmailResponse;
 import com.ssafy.todolist.service.EmailService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +26,8 @@ public class EmailController {
     }
 
     @PostMapping("/authentication")
-    public AuthenticationResponse authenticateCertificationNumber(@RequestBody Map<String, String> authentication) {
-        return emailService.authenticateCertificationNumber(Integer.parseInt(authentication.get("authentication")));
+    public AuthenticationResponse authenticateCertificationNumber(@RequestBody AuthenticationDTO authentication) {
+        return emailService.authenticateCertificationNumber(Integer.parseInt(authentication.getAuthentication()));
     }
 
 }
