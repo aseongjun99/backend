@@ -1,5 +1,6 @@
 package com.ssafy.todolist.service;
 
+import com.ssafy.todolist.domain.email.AuthenticationDTO;
 import com.ssafy.todolist.domain.email.AuthenticationResponse;
 import com.ssafy.todolist.domain.email.Email;
 import com.ssafy.todolist.domain.email.EmailResponse;
@@ -55,8 +56,9 @@ public class EmailService {
         }
     }
 
-    public AuthenticationResponse authenticate(int authenticationNumber) {
-        return new AuthenticationResponse(number == authenticationNumber);
+    public AuthenticationResponse authenticate(AuthenticationDTO authenticationDTO) {
+        Email email = emailRepository.findByEmail(authenticationDTO.getEmail());
+        return new AuthenticationResponse(authenticationDTO.getAuthentication().equals(email.getAuthenticationString()));
     }
 
 }
