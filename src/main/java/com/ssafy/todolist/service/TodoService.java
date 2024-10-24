@@ -1,7 +1,7 @@
 package com.ssafy.todolist.service;
 
-import com.ssafy.todolist.domain.Todo;
-import com.ssafy.todolist.domain.TodoDTO;
+import com.ssafy.todolist.domain.todo.Todo;
+import com.ssafy.todolist.domain.todo.TodoDTO;
 import com.ssafy.todolist.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
