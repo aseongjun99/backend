@@ -1,7 +1,7 @@
 package com.ssafy.todolist.service;
 
-import com.ssafy.todolist.domain.CursorResponse;
-import com.ssafy.todolist.domain.OffsetResponse;
+import com.ssafy.todolist.domain.paging.CursorResponse;
+import com.ssafy.todolist.domain.paging.OffsetResponse;
 import com.ssafy.todolist.domain.Todo;
 import com.ssafy.todolist.domain.TodoDTO;
 import com.ssafy.todolist.repository.TodoRepository;
