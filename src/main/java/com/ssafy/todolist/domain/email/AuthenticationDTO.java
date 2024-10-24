@@ -2,9 +2,9 @@ package com.ssafy.todolist.domain.email;
 
 public class AuthenticationDTO {
 
-    private String authentication;
-    private String email;
-    private String authenticationTime;
+    private final String authentication;
+    private final String email;
+    private final String authenticationTime;
 
     public AuthenticationDTO(String authentication, String email, String authenticationTime) {
         this.authentication = authentication;
