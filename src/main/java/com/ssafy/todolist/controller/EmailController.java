@@ -26,8 +26,8 @@ public class EmailController {
     }
 
     @PostMapping("/authentication")
-    public AuthenticationResponse authenticateCertificationNumber(@RequestBody AuthenticationDTO authentication) {
-        return emailService.authenticate(Integer.parseInt(authentication.getAuthentication()));
+    public AuthenticationResponse authenticateCertificationNumber(@RequestBody AuthenticationDTO authenticationDTO) {
+        return emailService.authenticate(authenticationDTO);
     }
 
 }
