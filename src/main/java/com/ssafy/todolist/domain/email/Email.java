@@ -15,6 +15,13 @@ public class Email {
     @Column(nullable = false)
     private String authenticationString;
 
+    public Email() {}
+
+    public Email(String email, String authenticationString) {
+        this.email = email;
+        this.authenticationString = authenticationString;
+    }
+
     public String getAuthenticationString() {
         return authenticationString;
     }
