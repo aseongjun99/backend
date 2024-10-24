@@ -7,10 +7,12 @@ import com.ssafy.todolist.domain.email.EmailResponse;
 import com.ssafy.todolist.service.EmailService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@RequestMapping("/email")
 @RestController
 public class EmailController {
 
@@ -20,7 +22,7 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @PostMapping("/email")
+    @PostMapping()
     public EmailResponse sendAuthentication(@RequestBody EmailDTO emailDto) {
         return emailService.sendAuthentication(emailDto.getEmail());
     }
