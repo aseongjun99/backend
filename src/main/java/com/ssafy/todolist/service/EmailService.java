@@ -5,6 +5,7 @@ import com.ssafy.todolist.repository.EmailRepository;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class EmailService {
         this.emailRepository = emailRepository;
     }
 
-    public String createAuthenticationNumber() {
+    public String createAuthentication() {
         return Integer.toString((int) (Math.random() * 90000 + 100000));
     }
 
@@ -44,21 +45,22 @@ public class EmailService {
         return message;
     }
 
-    public EmailResponse sendCertificationNumber(String email) {
+    public EmailResponse sendAuthentication(String email) {
         try {
-            String authenticationNumber = createAuthenticationNumber();
-            javaMailSender.send(createMail(email, authenticationNumber));
-            emailRepository.save(new Email(email, authenticationNumber, LocalDateTime.now().plusMinutes(5).toString()));
+            String authentication = createAuthentication();
+            javaMailSender.send(createMail(email, authentication));
+            emailRepository.save(new Email(email, authentication, LocalDateTime.now().plusMinutes(5).toString()));
             return new EmailResponse(true);
         } catch (Exception e) {
             return new EmailResponse(false);
         }
     }
 
+    @Transactional(readOnly = true)
     public AuthenticationResponse authenticate(AuthenticationDTO authenticationDTO) {
         Email email = emailRepository.findByEmail(authenticationDTO.getEmail());
-        AuthenticationDTO authenticationDTOForCheck = new AuthenticationDTO(email.getAuthenticationString(), email.getEmail(), email.getExpirationTime());
-        if (authenticationDTOForCheck.getAuthenticationTime().compareTo(LocalDateTime.now().toString()) < 0) {
+        String expirationTime = emailRepository.findByEmail(authenticationDTO.getEmail()).getExpirationTime();
+        if (expirationTime.compareTo(LocalDateTime.now().toString()) < 0) {
             return new AuthenticationResponse(false);
         }
         return new AuthenticationResponse(authenticationDTO.getAuthentication().equals(email.getAuthenticationString()));
