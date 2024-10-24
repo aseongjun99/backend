@@ -1,13 +1,12 @@
 package com.ssafy.todolist.service;
 
-import com.ssafy.todolist.domain.email.AuthenticationDTO;
-import com.ssafy.todolist.domain.email.AuthenticationResponse;
-import com.ssafy.todolist.domain.email.Email;
-import com.ssafy.todolist.domain.email.EmailResponse;
+import com.ssafy.todolist.domain.email.*;
 import com.ssafy.todolist.repository.EmailRepository;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class EmailService {
@@ -49,7 +48,7 @@ public class EmailService {
         try {
             String authenticationNumber = createAuthenticationNumber();
             javaMailSender.send(createMail(email, authenticationNumber));
-            emailRepository.save(new Email(email, authenticationNumber));
+            emailRepository.save(new Email(email, authenticationNumber, LocalDateTime.now().plusMinutes(5).toString()));
             return new EmailResponse(true);
         } catch (Exception e) {
             return new EmailResponse(false);
@@ -58,6 +57,10 @@ public class EmailService {
 
     public AuthenticationResponse authenticate(AuthenticationDTO authenticationDTO) {
         Email email = emailRepository.findByEmail(authenticationDTO.getEmail());
+        AuthenticationDTO authenticationDTOForCheck = new AuthenticationDTO(email.getAuthenticationString(), email.getEmail(), email.getExpirationTime());
+        if (authenticationDTOForCheck.getAuthenticationTime().compareTo(authenticationDTO.getAuthenticationTime()) < 0) {
+            return new AuthenticationResponse(false);
+        }
         return new AuthenticationResponse(authenticationDTO.getAuthentication().equals(email.getAuthenticationString()));
     }
 
