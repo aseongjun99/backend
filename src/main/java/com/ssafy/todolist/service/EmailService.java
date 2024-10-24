@@ -19,11 +19,11 @@ public class EmailService {
         this.emailRepository = emailRepository;
     }
 
-    public String createCertificationNumber() {
+    public String createAuthenticationNumber() {
         return Integer.toString((int) (Math.random() * 90000 + 100000));
     }
 
-    public MimeMessage createMail(String email, String certificationNumber) {
+    public MimeMessage createMail(String email, String authenticationNumber) {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         try {
@@ -33,7 +33,7 @@ public class EmailService {
             StringBuilder body = new StringBuilder();
             body.append("<h3>요청하신 인증 번호 입니다.</h3>")
                     .append("<h1>")
-                    .append(certificationNumber)
+                    .append(authenticationNumber)
                     .append("</h1>")
                     .append("<h3>감사합니다.</h3>");
             message.setText(body.toString(), "UTF-8", "html");
@@ -46,17 +46,17 @@ public class EmailService {
 
     public EmailResponse sendCertificationNumber(String email) {
         try {
-            String certificationNumber = createCertificationNumber();
-            javaMailSender.send(createMail(email, certificationNumber));
-            emailRepository.save(new Email(email, certificationNumber));
+            String authenticationNumber = createAuthenticationNumber();
+            javaMailSender.send(createMail(email, authenticationNumber));
+            emailRepository.save(new Email(email, authenticationNumber));
             return new EmailResponse(true);
         } catch (Exception e) {
             return new EmailResponse(false);
         }
     }
 
-    public AuthenticationResponse authenticateCertificationNumber(int certificationNumber) {
-        return new AuthenticationResponse(number == certificationNumber);
+    public AuthenticationResponse authenticate(int authenticationNumber) {
+        return new AuthenticationResponse(number == authenticationNumber);
     }
 
 }
