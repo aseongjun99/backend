@@ -14,6 +14,7 @@ public class EmailService {
 
     private final EmailRepository emailRepository;
     private final JavaMailSender javaMailSender;
+    private static final int EXPIRATION_TIME_LIMIT = 5;
 
     public EmailService(JavaMailSender javaMailSender, EmailRepository emailRepository) {
         this.javaMailSender = javaMailSender;
@@ -49,7 +50,8 @@ public class EmailService {
         try {
             String authentication = createAuthentication();
             javaMailSender.send(createMail(email, authentication));
-            emailRepository.save(new Email(email, authentication, LocalDateTime.now().plusMinutes(5).toString()));
+            String expirationTime = LocalDateTime.now().plusMinutes(EXPIRATION_TIME_LIMIT).toString();
+            emailRepository.save(new Email(email, authentication, expirationTime));
             return new EmailResponse(true);
         } catch (Exception e) {
             return new EmailResponse(false);
