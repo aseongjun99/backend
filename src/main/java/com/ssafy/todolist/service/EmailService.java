@@ -58,7 +58,7 @@ public class EmailService {
     public AuthenticationResponse authenticate(AuthenticationDTO authenticationDTO) {
         Email email = emailRepository.findByEmail(authenticationDTO.getEmail());
         AuthenticationDTO authenticationDTOForCheck = new AuthenticationDTO(email.getAuthenticationString(), email.getEmail(), email.getExpirationTime());
-        if (authenticationDTOForCheck.getAuthenticationTime().compareTo(authenticationDTO.getAuthenticationTime()) < 0) {
+        if (authenticationDTOForCheck.getAuthenticationTime().compareTo(LocalDateTime.now().toString()) < 0) {
             return new AuthenticationResponse(false);
         }
         return new AuthenticationResponse(authenticationDTO.getAuthentication().equals(email.getAuthenticationString()));
