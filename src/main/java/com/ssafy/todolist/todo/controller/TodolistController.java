@@ -1,9 +1,9 @@
-package com.ssafy.todolist.controller;
+package com.ssafy.todolist.todo.controller;
 
-import com.ssafy.todolist.domain.todo.FindTodosResponse;
-import com.ssafy.todolist.domain.todo.Todo;
-import com.ssafy.todolist.domain.todo.TodoDTO;
-import com.ssafy.todolist.service.TodoService;
+import com.ssafy.todolist.todo.dto.FindTodosResponse;
+import com.ssafy.todolist.todo.domain.Todo;
+import com.ssafy.todolist.todo.dto.TodoDTO;
+import com.ssafy.todolist.todo.service.TodoService;
 import com.ssafy.todolist.util.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

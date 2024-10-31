@@ -1,4 +1,4 @@
-package com.ssafy.todolist.domain.email;
+package com.ssafy.todolist.email.dto;
 
 public class EmailResponse {
     private final boolean isOk;

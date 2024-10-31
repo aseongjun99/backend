@@ -1,16 +1,16 @@
-package com.ssafy.todolist.controller;
+package com.ssafy.todolist.email.controller;
 
-import com.ssafy.todolist.domain.email.AuthenticationDTO;
-import com.ssafy.todolist.domain.email.AuthenticationResponse;
-import com.ssafy.todolist.domain.email.EmailDTO;
-import com.ssafy.todolist.domain.email.EmailResponse;
-import com.ssafy.todolist.service.EmailService;
+import com.ssafy.todolist.email.dto.AuthenticationDTO;
+import com.ssafy.todolist.email.dto.AuthenticationResponse;
+import com.ssafy.todolist.email.dto.EmailDTO;
+import com.ssafy.todolist.email.dto.EmailResponse;
+import com.ssafy.todolist.email.service.EmailService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
+@RequestMapping("/email")
 @RestController
 public class EmailController {
 
@@ -20,7 +20,7 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @PostMapping("/email")
+    @PostMapping()
     public EmailResponse sendAuthentication(@RequestBody EmailDTO emailDto) {
         return emailService.sendAuthentication(emailDto.getEmail());
     }

@@ -1,4 +1,4 @@
-package com.ssafy.todolist.domain.email;
+package com.ssafy.todolist.email.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
