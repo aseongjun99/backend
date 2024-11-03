@@ -1,4 +1,4 @@
-package com.ssafy.todolist.oauth.dto;
+package com.ssafy.todolist.oauth.dto.auth;
 
 public class AuthFailResponse {
 
