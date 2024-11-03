@@ -1,12 +1,10 @@
 package com.ssafy.todolist.oauth.service;
 
-import com.ssafy.todolist.oauth.dto.AuthDTO;
-import com.ssafy.todolist.oauth.dto.AuthSuccessResponse;
+import com.ssafy.todolist.oauth.dto.auth.AuthRequest;
+import com.ssafy.todolist.oauth.dto.kakao.KakaoTokenResponse;
+import com.ssafy.todolist.oauth.dto.member.MemberInfoResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -30,38 +28,26 @@ public class OAuthService {
         this.restTemplate = restTemplate;
     }
 
-    public AuthSuccessResponse getTokens(AuthDTO authDTO){
+    public KakaoTokenResponse getTokens(AuthRequest authRequest){
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("grant_type", "authorization_code");
-        body.add("client_id", clientId);
-        body.add("redirect_uri", redirectUri);
-        body.add("code", authDTO.getCode());
+        MultiValueMap<String, String> requestToKakao = new LinkedMultiValueMap<>();
+        requestToKakao.add("grant_type", "authorization_code");
+        requestToKakao.add("client_id", clientId);
+        requestToKakao.add("redirect_uri", redirectUri);
+        requestToKakao.add("code", authRequest.getCode());
 
-        AuthSuccessResponse authSuccessResponse = restTemplate.postForObject(
-                tokenUri,
-                new HttpEntity<>(body, headers),
-                AuthSuccessResponse.class
-        );
-
-        return authSuccessResponse;
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(requestToKakao, headers);
+        return restTemplate.postForObject(tokenUri, httpEntity, KakaoTokenResponse.class);
     }
 
-    public void getUserInfo(String token) {
+    public MemberInfoResponse getUserInfo(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-        headers.add("Authorization", "Bearer "+token);
-
-        ResponseEntity<String> response =
-                restTemplate.exchange("https://kapi.kakao.com/v2/user/me",
-                        HttpMethod.GET,
-                        new HttpEntity<>(null, headers),
-                        String.class);
-
-        String body = response.getBody();
-        System.out.println(body);
+        headers.set("Authorization", accessToken);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+        return restTemplate.postForObject("https://kapi.kakao.com/v2/user/me", request, MemberInfoResponse.class);
     }
 
 }
