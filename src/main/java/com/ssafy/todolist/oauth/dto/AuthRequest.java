@@ -1,6 +1,6 @@
 package com.ssafy.todolist.oauth.dto;
 
-public class AuthDTO {
+public class AuthRequest {
 
     private String code;
 
