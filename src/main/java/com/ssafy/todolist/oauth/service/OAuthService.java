@@ -1,8 +1,10 @@
 package com.ssafy.todolist.oauth.service;
 
 import com.ssafy.todolist.oauth.dto.auth.AuthRequest;
+import com.ssafy.todolist.oauth.dto.kakao.KakaoReissueResponse;
 import com.ssafy.todolist.oauth.dto.kakao.KakaoTokenResponse;
 import com.ssafy.todolist.oauth.dto.member.MemberInfoResponse;
+import com.ssafy.todolist.oauth.dto.reissue.ReissueResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -50,4 +52,16 @@ public class OAuthService {
         return restTemplate.postForObject("https://kapi.kakao.com/v2/user/me", request, MemberInfoResponse.class);
     }
 
+    public KakaoReissueResponse getReissue(String refreshToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> requestToKakao = new LinkedMultiValueMap<>();
+        requestToKakao.add("grant_type", "refresh_token");
+        requestToKakao.add("client_id", clientId);
+        requestToKakao.add("refresh_token", refreshToken);
+
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(requestToKakao, headers);
+        return restTemplate.postForObject(tokenUri, httpEntity, KakaoReissueResponse.class);
+    }
 }
