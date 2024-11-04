@@ -4,6 +4,7 @@ import com.ssafy.todolist.oauth.dto.auth.AuthFailResponse;
 import com.ssafy.todolist.oauth.dto.auth.AuthRequest;
 import com.ssafy.todolist.oauth.dto.auth.AuthResponse;
 import com.ssafy.todolist.oauth.dto.kakao.KakaoTokenResponse;
+import com.ssafy.todolist.oauth.dto.reissue.ReissueResponse;
 import com.ssafy.todolist.oauth.service.OAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,20 @@ public class OAuthController {
                 oAuthService.getUserInfo(accessToken)
                         .getKakaoAccount()
                         .getProfile());
+    }
+
+    @GetMapping("/reissue")
+    public ResponseEntity<?> getReissue(@RequestHeader(value = "X-Refresh",  required = false) String refreshToken) {
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new AuthFailResponse(NULL_ACCESS_TOKEN_STATUS, NULL_ACCESS_TOKEN_CODE));
+        }
+
+        return ResponseEntity.ok().body(
+                new ReissueResponse(
+                        oAuthService.getReissue(refreshToken)
+                        .getAccessToken()
+                )
+        );
     }
 }
